@@ -22,15 +22,15 @@ docker run -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="mypass" tutum/mongo
 Para verificar se o seu contêiner está executando corretamente, digite o comando ```docker ps```
 
 
-## Para rodar o arquivo tsconfig - para rodar nossa config e criar nosso diretorio dist:
+## Rodar o arquivo tsconfig - para rodar nossa config e criar o diretorio dist resultante da transpiler ts para js:
 
 ```
 npm run compile
 ```
 
-Iniciar nosso projeto - Para rodar após criados os arquivos compile:
+Iniciar nosso projeto -  rodar após o comando ```npm run compile```
 ```
-Npm start
+npm start
 ```
 
 pagina de apoio
