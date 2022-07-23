@@ -1,3 +1,4 @@
+# Features para entrar na master
 
 Para rodar o  aquivo tsconfig - ver nossas config e criar nosso diretorio dist
 
