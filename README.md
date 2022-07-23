@@ -1,3 +1,4 @@
+# API base com e mongoDB disponivell para rodar localmente
 
 Para rodar o  aquivo tsconfig - ver nossas config e criar nosso diretorio dist
 
