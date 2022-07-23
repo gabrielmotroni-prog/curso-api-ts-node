@@ -1,3 +1,4 @@
+# API base com docker e mongoDB disponivell para hospedar em players na nuvem
 
 Para rodar o  aquivo tsconfig - ver nossas config e criar nosso diretorio dist
 
