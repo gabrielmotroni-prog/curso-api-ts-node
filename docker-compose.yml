@@ -1,0 +1,15 @@
+version: "3"
+services:
+  api_dev:
+    image: gabriesmotroni/api-ts
+    ports:
+      - "5001:3050"
+    links:
+      - link-db
+  link-db:
+    image: tutum/mongodb
+    ports:
+      - "27017:27017"
+      - "28017:28017"
+    environment:
+      - AUTH=no
