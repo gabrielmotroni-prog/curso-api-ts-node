@@ -1,3 +1,4 @@
+# API base para iniciar uma RESTful api rodando localmente 
 
 Para rodar o  aquivo tsconfig - ver nossas config e criar nosso diretorio dist
 
