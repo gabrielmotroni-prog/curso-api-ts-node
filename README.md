@@ -5,15 +5,35 @@
 docker-compose up
 ```
 
-## Rodar o arquivo tsconfig - para rodar nossa config e criar o diretorio dist resultante da transpiler ts para js:
+## Rodar imagem local:
 
+### banco de dados
+
+1. O primeiro passo será baixar a imagem do mongoDB. Trabalhamos com a tutum/mongod, mas você pode utilizar uma outra imagem mongo que todos os exemplos irão funcionar normalmente.
 ```
-npm run compile
+docker pull tutum/mongodb
 ```
 
-Iniciar nosso projeto -  rodar após o comando ```npm run compile```
+2. Com a imagem tutum/mongodb no seu host, o próximo passo será criar um contêiner de servidor de banco de dados mongoDB. Para isso, você pode escolher uma das duas instruções abaixo:
+
+Sem senha "recomendado para ambiente de desenvolvimento"
 ```
-npm start
+docker run -d -p 27017:27017 -p 28017:28017 -e AUTH=no tutum/mongodb
+```
+
+Com senha:
+```
+docker run -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="mypass" tutum/mongodb
+
+### aplicação
+1. montar imagem
+```
+docker build -t gabriesmotroni/api-ts .
+```
+
+2. iniciar container com a imagem
+```
+Docker run -d -p 5000:3050 gabriesmotroni/api-ts 
 ```
 
 pagina de apoio
