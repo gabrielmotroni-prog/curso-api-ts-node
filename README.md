@@ -1,13 +1,13 @@
 # API base com docker e mongoDB disponivel para hospedar em players de nuvem
 
-## subir aplicacao e banco de dados juntos
+## Subir aplicação e banco de dados juntos
 ```
 docker-compose up
 ```
 
-## Rodar imagem local:
+## Rodar local:
 
-### banco de dados
+### Banco de dados
 
 1. O primeiro passo será baixar a imagem do mongoDB. Trabalhamos com a tutum/mongod, mas você pode utilizar uma outra imagem mongo que todos os exemplos irão funcionar normalmente.
 ```
@@ -24,8 +24,9 @@ docker run -d -p 27017:27017 -p 28017:28017 -e AUTH=no tutum/mongodb
 Com senha:
 ```
 docker run -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="mypass" tutum/mongodb
+```
 
-### aplicação
+### Aplicação
 1. montar imagem
 ```
 docker build -t gabriesmotroni/api-ts .
