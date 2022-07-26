@@ -6,7 +6,8 @@ const bodyParse = require("body-parser"); /// ajudar com os middles - json e qeu
 const cors = require("cors");
 const db_1 = require("./infra/db"); //conexao com base dados
 const newsControlers_1 = require("./controller/newsControlers"); //controle para chamar na rota
-const auth_1 = require("./infra/auth");
+const auth_1 = require("./infra/auth"); //validador de toker jwt
+const upload_1 = require("./infra/upload");
 class StartUp {
     constructor() {
         //instacia
@@ -25,7 +26,7 @@ class StartUp {
         //objeto do tipo CorsOptions
         const options = {
             methods: "GET, OPTIONS, PUT, POST, DELETE",
-            origin: "*"
+            origin: "*",
         };
         this.app.use(cors(options));
     }
@@ -37,8 +38,18 @@ class StartUp {
     //metodo
     routes() {
         //rota padrao
-        this.app.route('/').get((req, res) => {
-            res.send({ versao: '0.0.1' });
+        this.app.route("/").get((req, res) => {
+            res.send({ versao: "0.0.1" });
+        });
+        //rota upload de arquivos
+        this.app.route("/uploads").post(upload_1.default.single("file"), (req, res) => {
+            //single - um arquivo
+            try {
+                res.send('Arquivo enviado com sucessso!');
+            }
+            catch (error) {
+                console.log(error);
+            }
         });
         //bloqueia rotas abaixo, validando jwt
         this.app.use(auth_1.default.validate);
