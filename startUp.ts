@@ -1,9 +1,12 @@
 //classe startUp passamos ao program.ts
 import * as express from "express"; // para as rotas
-import * as bodyParse from "body-parser" /// ajudar com os middles - json e qeur string
+import * as bodyParse from "body-parser"; /// ajudar com os middles - json e qeur string
+import * as cors from 'cors';
 
 import Database from "./infra/db"; //conexao com base dados
 import NewsControlers from "./controller/newsControlers"; //controle para chamar na rota
+import Auth from "./infra/auth"; //validador de toker jwt
+import auth from "./infra/auth";
 
 class StartUp {
     //atributo publico do tipo express.Application
@@ -26,17 +29,36 @@ class StartUp {
         // cria coenxao
         this._db.createConnection();
     }
+
+    //habita cors na nossa aplicacao
+    //metodo com as config de aceite
+    enableCors(){   
+        //objeto do tipo CorsOptions
+        const options: cors.CorsOptions = {
+            methods: "GET, OPTIONS, PUT, POST, DELETE",
+            origin: "*" 
+        };
+        
+        this.app.use(cors(options))
+    }
+
+
     middler(){
+        this.enableCors();
         this.app.use(bodyParse.json()); //trabalahr com json
         this.app.use(bodyParse.urlencoded({extended:false})); // para trabalharmos com query string
     }
 
     //metodo
     routes(){
+
         //rota padrao
         this.app.route('/').get((req,res)=>{
             res.send({versao:'0.0.1'})
         });
+
+        //bloqueia rotas abaixo, validando jwt
+        this.app.use(auth.validate)
 
         // rotas referente a news
         this.app.route("/api/v1/news").get(NewsControlers.get);
