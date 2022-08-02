@@ -1,7 +1,7 @@
 version: "3"
 services:
   api_dev:
-    image: gabriesmotroni/api-ts
+    image: gabrielmotroni/apinewsredis
     ports:
       - "5001:3050"
     links:
@@ -13,3 +13,5 @@ services:
       - "28017:28017"
     environment:
       - AUTH=no
+  redis:
+    image: "redis"

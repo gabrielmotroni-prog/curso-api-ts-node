@@ -1,54 +1,85 @@
 import newsService from "../services/newsService";
 import * as HttpStatus from "http-status"
+import * as redis from "redis"
 import Helper from "../infra/helper";
 
 class NewsController {
 
     //mesmo que os verbos http feios em news Service
-    get(req, res){
-        newsService.get()
-        .then(news => Helper.sendResponse(res, HttpStatus.OK, news))
-        .catch(error => console.error.bind(console, `Error ${error}`))
+    async get(req, res){
 
+        try{
+            const client = await redis.createClient({url:'redis://redis:6379'});
+            await client.connect();
+            const newsRedis = await client.get("news");
+            
+            //consulta se existe valor no redis
+            if(newsRedis){
+                console.log("redis");
+                Helper.sendResponse(res, HttpStatus.OK, JSON.parse(newsRedis));
+                
+            }else{
+                //consulta banco
+                const newsDB = await newsService.get();
+                //guarda em cache no redis
+                client.set("news", JSON.stringify(newsDB));
+                client.expire("news",20)
+                console.log("DB")
+                Helper.sendResponse(res, HttpStatus.OK, newsDB);
+            };
+        }catch(error){
+            console.error(`# Erro ao tentar consultar \n ${error}`)
+            return false
+        }
     }
 
-    getbyId(req, res){
+    async getbyId(req, res){
 
-        const _id = req.params.id
-
-        newsService.getbyId(_id)
-        .then(news =>Helper.sendResponse(res, HttpStatus.OK, news))
-        .catch(error => console.error.bind(console, `Error ${error}`))
-    
+        try{
+            const _id = req.params.id
+            let response = await newsService.getbyId(_id)
+            
+            Helper.sendResponse(res, HttpStatus.OK, response)
+        }catch(error){
+            console.error(`# Erro ao tentar consultar \n ${error}`)
+        } 
     }
-    create(req, res){
-        
-        //corpo recebdido
-        let vm = req.body;
+    async create(req, res){
 
-        newsService.create(vm)
-        .then(news =>Helper.sendResponse(res, HttpStatus.OK, 'Noticia cadastrada com sucesso!'))
-        .catch(error => console.error.bind(console, `Error ${error}`))
-    }
+        try{
+            //corpo recebdido
+            let vm = req.body;
 
-    update(req, res ){
-
-        const _id = req.params.id
-        //corpo recebdido
-        let news = req.body;
-
-        newsService.update(_id, news)
-        .then(news => Helper.sendResponse(res, HttpStatus.OK, ` ${news.title} Noticia alterada com sucesso!`))
-        .catch(error => console.error.bind(console, `Error ${error}`))
+            const response = await newsService.create(vm);
+            Helper.sendResponse(res, HttpStatus.OK, {mensage: 'Noticia cadastrada com sucesso!', data: response})
+        } catch(error){
+            console.error(`# Erro ao tentar criar \n ${error}`)
+        }
     }
 
-    delete(req, res){
-        const _id = req.params.id
+    async update(req, res ){
+        try{
+            const _id = req.params.id
+            //corpo recebdido
+            let news = req.body;
 
-        newsService.delete(_id)
-        .then( ()=> Helper.sendResponse(res, HttpStatus.OK, `Noticia deletada com sucesso!`))
-        .catch(error => console.error.bind(console, `Error ${error}`))
+            await newsService.update(_id, news)
+            Helper.sendResponse(res, HttpStatus.OK, `${news.title} Noticia alterada com sucesso!`)
 
+        }catch(error){
+            console.error(`# Erro ao tentar atualizar \n ${error}`)
+        }
+    }
+
+    async delete(req, res){
+        try{
+            const _id = req.params.id
+
+            await newsService.delete(_id)
+            Helper.sendResponse(res, HttpStatus.OK, `Noticia deletada com sucesso!`)        
+        }catch(error){
+            console.error(`# Erro ao tentar deletar \n ${error}`)
+        }
     }
 }
 

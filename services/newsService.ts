@@ -7,23 +7,23 @@ class NewsService {
     // os principais verbos http de uma api RESTful
 
     //todos registros da tabela
-    get(){
-        return newsRepository.find({})
+    async get(){
+        return await newsRepository.find({})
     }
 
-    getbyId(_id){
-            return newsRepository.findById(_id)
+    async getbyId(_id){
+            return await newsRepository.findById(_id)
     }
-    create(news){
-        return newsRepository.create(news)
+    async create(news){
+        return await newsRepository.create(news)
     }
     // procura por id para atualizar
-    update(_id, news){
-        return newsRepository.findByIdAndUpdate(_id, news)
+    async update(_id, news){
+        return await newsRepository.updateOne({id: _id}, news) //(_id, news)
     }
     // procura por id para apagar
-    delete(_id){
-        return newsRepository.findByIdAndDelete(_id)
+    async delete(_id){
+        return await newsRepository.findByIdAndDelete(_id)
     }
 
 }
