@@ -1,7 +1,7 @@
 version: "3"
 services:
   api_dev:
-    image: gabrielmotroni/apinewsredis
+    image: gabriesmotroni/apinewsredis
     ports:
       - "5001:3050"
     links:

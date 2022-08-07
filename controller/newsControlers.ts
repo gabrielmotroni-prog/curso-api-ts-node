@@ -9,6 +9,7 @@ class NewsController {
     async get(req, res){
 
         try{
+            //const client = await redis.createClient({url:'redis://redis:6379'});
             const client = await redis.createClient({url:'redis://redis:6379'});
             await client.connect();
             const newsRedis = await client.get("news");

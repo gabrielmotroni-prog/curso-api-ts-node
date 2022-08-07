@@ -2,11 +2,14 @@
 import * as express from "express"; // para as rotas
 import * as bodyParse from "body-parser"; /// ajudar com os middles - json e qeur string
 import * as cors from "cors";
+import * as compression from 'compression';
 
 import Database from "./infra/db"; //conexao com base dados
-import NewsControlers from "./controller/newsControlers"; //controle para chamar na rota
+
 import Auth from "./infra/auth"; //validador de toker jwt
 import uploads from "./infra/upload";
+import newsRouter from "./routes/newsRouter";//importa as rotas de newsRouter
+import newsRepository from "./repository/newsRepository";
 
 class StartUp {
   //atributo publico do tipo express.Application
@@ -41,17 +44,20 @@ class StartUp {
 
     this.app.use(cors(options));
   }
-
+  // nosso metodo middler
   middler() {
     this.enableCors();
     this.app.use(bodyParse.json()); //trabalahr com json
     this.app.use(bodyParse.urlencoded({ extended: false })); // para trabalharmos com query string
+    this.app.use(compression()); //deixa nossas api mas perfomatica
   }
 
   //metodo
   routes() {
     //rota padrao
     this.app.route("/").get((req, res) => {
+      const motroni = "d"
+      console.log(motroni)
       res.send({ versao: "0.0.1" });
     });
 
@@ -65,15 +71,14 @@ class StartUp {
       }
     });
 
-    //bloqueia rotas abaixo, validando jwt
-    this.app.use(Auth.validate);
+    //middle bloqueia rotas abaixo, validando jwt
+    //this.app.use(Auth.validate);
 
-    // rotas referente a news
-    this.app.route("/api/v1/news").get(NewsControlers.get);
-    this.app.route("/api/v1/news/:id").get(NewsControlers.getbyId);
-    this.app.route("/api/v1/news").post(NewsControlers.create);
-    this.app.route("/api/v1/news/:id").put(NewsControlers.update);
-    this.app.route("/api/v1/news/:id").delete(NewsControlers.delete);
+    //rotas sobre news
+    this.app.use(newsRouter)
+    // poderia ser 
+    //this.app.use('/', newsRouter)
+
   }
 }
 
