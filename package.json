@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "tsc -w -diagnostics",
     "start": "node program.js",
-    "develop": "nodemon ./dist/program.js"
+    "develop": "nodemon program.ts",
+    "develop_old": "nodemon ./dist/program.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "express": "^4.18.1",
     "http-status": "^1.5.2",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
     "mongoose": "^5.4.1",
     "multer": "^1.4.5-lts.1",
     "redis": "^4.2.0",
@@ -33,6 +35,7 @@
     "@types/express": "^4.17.13",
     "@types/http-status": "^1.1.2",
     "@types/jsonwebtoken": "^8.5.8",
+    "@types/moment": "^2.13.0",
     "@types/mongoose": "^5.4.11",
     "@types/multer": "^1.4.7",
     "@types/node": "^18.0.1",
