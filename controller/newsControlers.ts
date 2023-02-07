@@ -12,6 +12,7 @@ class NewsController {
         try{
             //compose 
             //const client = await redis.createClient({url:'redis://redis:6379'});
+            //local
             const client = await redis.createClient();
             await client.connect();
             const newsRedis = await client.get("news");
