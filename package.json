@@ -10,7 +10,9 @@
     "develop": "nodemon program.ts",
     "develop_old": "nodemon ./dist/program.js"
   },
-  "engines": {"node": ">=14"},
+  "engines": {
+    "node": ">=14"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,7 +22,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-graphql": "^0.12.0",
-    "graphql": "^16.6.0",
+    "graphql": "^15.8.0",
     "http-status": "^1.5.2",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
