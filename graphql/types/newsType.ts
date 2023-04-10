@@ -1,8 +1,5 @@
 export default
 
-//Query: faz list
-//Mutation: faz alteracao
-
 `
 scalar Date 
 
@@ -41,6 +38,11 @@ type NewsInput{
     active: Boolean
 }
 `
+
+
+//Query: faz list
+//Mutation: faz alteracao
+
 
 /*
 query

@@ -1,3 +1,4 @@
+
 //classe startUp passamos ao program.ts
 
 //terceiros//
@@ -6,7 +7,10 @@ import * as bodyParse from "body-parser"; /// ajudar com os middles - json e qeu
 import * as cors from "cors";
 import * as compression from 'compression';
 // para passar nosso resouvers,schmes ao graphql
-import  {graphqlHTTP} from 'express-graphql'
+//import  {graphqlHTTP} from 'express-graphql'
+//import  {graphql} from 'graphql'
+import * as graphqlHTTP from 'express-graphql'
+
 
 //nossos//
 import Database from "./infra/db"; //conexao com base dados
@@ -60,7 +64,7 @@ class StartUp {
   }
 
   //metodo
-  routes() {
+   routes() {
     //rota padrao
     this.app.route("/").get((req, res) => {
       const motroni = "d"
@@ -88,7 +92,7 @@ class StartUp {
 
     //rota graphql
     //é preciso configurar o middleware do GraphQL para funcionar com o express.
-    this.app.use('/graphql', graphqlHTTP({
+     this.app.use('/graphql', bodyParse.json(),  graphqlHTTP({
       schema: schemas, // nossos types
       rootValue: resolvers, // nossas services 
       graphiql: true // permita modo debug
