@@ -1,7 +1,7 @@
 /*
  responsável por passar nosso type mapeado com nosssas model para o graphQL
 */
-import { buildSchema, GraphQLSchema } from "graphQL";
+import { buildSchema } from "graphql";
 
 import newsType from "./types/newsType";
 

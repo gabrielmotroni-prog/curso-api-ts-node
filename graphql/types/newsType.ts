@@ -1,6 +1,4 @@
-export default
-
-`
+export default `
 scalar Date 
 
 type Query{
@@ -25,11 +23,11 @@ type News{
     active: Boolean
 }
 
-type NewsInput{
+input NewsInput{
     _id: String,
     hat: String,
     title: String,
-    text:String,
+    text: String,
     author: String,
     img: String,
     publishDate: Date,
@@ -37,12 +35,10 @@ type NewsInput{
     tag: String,
     active: Boolean
 }
-`
-
+`;
 
 //Query: faz list
 //Mutation: faz alteracao
-
 
 /*
 query
