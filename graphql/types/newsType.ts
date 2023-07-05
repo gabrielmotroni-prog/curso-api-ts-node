@@ -2,7 +2,7 @@ export default `
 scalar Date 
 
 type Query{
-    newslist:[News]
+    newsList:[News]
     newsGetById(id: String): News
 }
 type Mutation {
